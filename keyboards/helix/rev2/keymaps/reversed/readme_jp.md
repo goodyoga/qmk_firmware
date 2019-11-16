@@ -18,10 +18,12 @@
 ```
 
 他の配列(Colemak,Dvorak)は、[readme.md](readme.md) を参照
+
 Helix キットの右と左を入れ替えて左右をくっつけてミニキーボードの用に使うコンフィグレーションです。
+
 他レイヤーのキーマップについては reversed/keymap.c を参照してください。
 RAISE で矢印＋Page系のキー、LOWER で記号系のキーというマップにしています。
-ビルド・動作確認は Helix 5行版でのみ行っています。
+また、ビルド・動作確認は Helix 5行版でのみ行っています。
 
 ## カスタマイズ
 カスタマイズの方法は Helix default に準じます。
@@ -29,6 +31,7 @@ RAISE で矢印＋Page系のキー、LOWER で記号系のキーというマッ�
 
 ### Slave 側で4行のロゴを使用する
 4行のロゴを使用する場合は Slave用のフォントを helixfont_slave.h として用意する必要があります。
+
 ロゴは ASCII コードの { 0x60-0x74, 0x80-0x94, 0xA0-0xB4, 0xC0-0xD4 } の領域に配置してください。
 
 ```
@@ -36,13 +39,15 @@ USE_SLAVE_FONT    = yes     # use another font for slave.
 ```
 
 また、この設定のために keymaps/ 以下のファイル以外に下記のファイルを変更しています。
+```
 qmk_firmware/keyboards/helix/local_drivers/ssd1306.c
 qmk_firmware/keyboards/helix/local_drivers/ssd1306.h
 qmk_firmware/keyboards/helix/local_drivers/ssd1306.c
 qmk_firmware/keyboards/helix/rev2/local_features.mk
-
+```
 
 keymap.c 側では
+```
 static void render_logo(struct CharacterMatrix *matrix) {
 
   static char logo[]={
@@ -56,9 +61,11 @@ static void render_logo(struct CharacterMatrix *matrix) {
   matrix_write(matrix, logo);
   //matrix_write_P(&matrix, PSTR(" Split keyboard kit"));
 }
+```
 
 にするのと
 
+```
 void iota_gfx_task_user(void) {
   struct CharacterMatrix *p_matrix = matrix_getInstance();
 
@@ -79,10 +86,11 @@ void iota_gfx_task_user(void) {
     render_logo(p_matrix);
   }
 }
+```
 
 の変更で Slave 用フォントが使用され、4行のロゴが使用できます。
 
-page_mode true にを設定しないと、画面いっぱいにログの描画が終わった時点でスクロールされます。 また、オリジナルのコードではローカル変数の struct CharacterMatrix matrix に設定した内容を ssd1603.c::display にコピーするようになっていましたが、 page_mode の設定がうまく伝わらないタイミングがあるのかロゴがちらつきましたので、直接 matrix_getInstance() で ssd1603.c のインスタンスを取得し Update するように変更しました。
+page_mode を true にを設定しないと、ssd1603 ドライバのデフォルト動作として画面いっぱいに描画が終わった時点でスクロールされます。 また、オリジナルのコードではローカル変数の struct CharacterMatrix matrix に設定した内容を ssd1603.c::display にコピーするようになっていましたが、 page_mode の設定がうまく伝わらないタイミングがあるのかロゴがちらつきましたので、直接 matrix_getInstance() で ssd1603.c のインスタンスを取得し Update するように変更しました。
 
 build
 ```
