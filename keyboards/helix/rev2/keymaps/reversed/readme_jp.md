@@ -31,13 +31,18 @@ RAISE で矢印＋Page系のキー、LOWER で記号系のキーというマッ�
 
 Helix 標準では 3行×21文字でロゴを表示しますが、このオプションを有効にすると 4行×21文字でロゴを表示することができます。
 
+#### フォントファイルの準備
+
 4行のロゴを使用する場合は Slave用のフォントを helixfont_slave.h として用意する必要があります。
 Slave 側の変数名は font_slave[] としてください。 ヘッダの二重インクルード防止の ifdef も FONT5X7_H の部分2箇所を FONT5X7_SLAVE_H に変更する必要があります。 
-ロゴは ASCII コードの { 0x60-0x74, 0x80-0x94, 0xA0-0xB4, 0xC0-0xD4 } の領域に配置してください。 なお、slave 用に Master と同じデフォルトのフォントを使用すると、3行ロゴ下部に上下逆さまの小文字が表示されます。
+ロゴは ASCII コードの { 0x60-0x74, 0x80-0x94, 0xA0-0xB4, 0xC0-0xD4 } の領域に配置してください。 
+
+なお、slave 用に Master と同じデフォルトのフォントを使用すると、3行ロゴ下部に上下逆さまの小文字が表示されます。
 
 現状は LOCAL_GLCDFONT 設定に依存していますので Master 側も helixfont.h を用意してください。
 Master 側は helix/common/glcdfont.c の中身そのままコピペで大丈夫です。
 
+#### 設定
 rules.mk にて USE_SLAVE_FONT を yes に設定してください。
 
 
@@ -45,6 +50,8 @@ rules.mk にて USE_SLAVE_FONT を yes に設定してください。
 LOCAL_GLCDFONT    = yes     # use each keymaps "helixfont.h" insted of "common/glcdfont.c"
 USE_SLAVE_FONT    = yes     # use another font for slave.
 ```
+
+#### コードの変更
 
 また、この設定のために keymaps/ 以下のファイル以外に下記のファイルを変更していますので、必要に応じてこの fork から取得してください。
 ```
@@ -98,7 +105,9 @@ void iota_gfx_task_user(void) {
 
 の変更で Slave 用フォントが使用され、4行のロゴが表示できます。
 
-master_set_page_mode() で page_mode を true にを設定しないと、ssd1306 ドライバのデフォルト動作として画面いっぱいに4行ロゴの描画が終わった時点で1行スクロールされます。 また、qmk/qmk_firmware オリジナルのコードではローカル変数の struct CharacterMatrix matrix に設定した内容を ssd1306.c::display にコピーするようになっていましたが、 page_mode の設定がうまく伝わらないタイミングがあるのかロゴがちらつきましたので、直接 matrix_getInstance() で ssd1306.c のインスタンスを取得し Update するように変更しました。
+#### その他
+master_set_page_mode() で page_mode を true にを設定しないと、ssd1306 ドライバのデフォルト動作として画面いっぱいに4行ロゴの描画が終わった時点で1行スクロールされます。
+ また、qmk/qmk_firmware オリジナルのコードではローカル変数の struct CharacterMatrix matrix に設定した内容を ssd1306.c::display にコピーするようになっていましたが、 page_mode の設定がうまく伝わらないタイミングがあるのかロゴがちらつきましたので、直接 matrix_getInstance() で ssd1306.c のインスタンスを取得し Update するように変更しました。
 
 build
 ```
