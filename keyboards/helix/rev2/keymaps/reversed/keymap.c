@@ -462,14 +462,6 @@ void matrix_scan_user(void) {
      iota_gfx_task();  // this is what updates the display continuously
 }
 
-void matrix_update(struct CharacterMatrix *dest,
-                          const struct CharacterMatrix *source) {
-  if (memcmp(dest->display, source->display, sizeof(dest->display))) {
-    memcpy(dest->display, source->display, sizeof(dest->display));
-    dest->dirty = true;
-  }
-}
-
 //assign the right code to your layers for OLED display
 #define L_BASE 0
 #define L_LOWER (1<<_LOWER)
@@ -480,12 +472,14 @@ void matrix_update(struct CharacterMatrix *dest,
 static void render_logo(struct CharacterMatrix *matrix) {
 
   static char logo[]={
+#if defined(USE_SLAVE_FONT)
     0x60,0x61,0x62,0x63,0x64,0x65,0x66,0x67,0x68,0x69,0x6a,0x6b,0x6c,0x6d,0x6e,0x6f,0x70,0x71,0x72,0x73,0x74,
+#endif
     0x80,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x8f,0x90,0x91,0x92,0x93,0x94,
     0xa0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,
     0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,
     0};
-  matrix_write_nolf(matrix, logo);
+  matrix_write(matrix, logo);
   //matrix_write_P(&matrix, PSTR(" Split keyboard kit"));
 }
 
@@ -544,7 +538,7 @@ void render_status(struct CharacterMatrix *matrix) {
 
 
 void iota_gfx_task_user(void) {
-  struct CharacterMatrix matrix;
+  struct CharacterMatrix *p_matrix = matrix_getInstance();
 
 #if DEBUG_TO_SCREEN
   if (debug_enable) {
@@ -553,15 +547,15 @@ void iota_gfx_task_user(void) {
 #endif
 
 #if defined(USE_SLAVE_FONT)
-  matrix_set_is_master(is_master);
+  matrix_set_page_mode(!is_master);
+  matrix_set_font_no(is_master ? 0 : 1);
 #endif
-  matrix_clear(&matrix);
+  matrix_clear(p_matrix);
   if(is_master){
-    render_status(&matrix);
+    render_status(p_matrix);
   }else{
-    render_logo(&matrix);
+    render_logo(p_matrix);
   }
-  matrix_update(&display, &matrix);
 }
 
 #endif

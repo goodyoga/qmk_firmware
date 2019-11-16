@@ -28,6 +28,11 @@
 // with the matrix scan, causing keys to drop.
 #define DEBUG_TO_SCREEN 0
 
+
+
+static struct CharacterMatrix display;
+
+
 //static uint16_t last_battery_update;
 //static uint32_t vbat;
 //#define BatteryUpdateInterval 10000 /* milliseconds */
@@ -39,25 +44,33 @@
 static uint8_t displaying;
 #endif
 static uint16_t last_flush;
-
-static bool force_dirty = true;
-
-#if defined(USE_SLAVE_FONT)
-static bool  is_master = false;
+static bool  force_dirty = true;
 
 
-void  matrix_set_is_master(bool m)
+struct CharacterMatrix *matrix_getInstance(void)
 {
-    is_master = m;
+    return &display;
 }
 
+void  matrix_set_page_mode(bool m)
+{
+    display.page_mode = m;
+}
+
+#if defined(USE_SLAVE_FONT)
+void  matrix_set_font_no(int idx)
+{
+    display.font_no = idx;
+}
 
 const uint8_t *get_font(void)
 {
-    if (is_master)
-         return font;
-    else
-         return font_slave;
+    int idx;
+
+    idx = display.font_no;
+
+    if (0 == idx)  return font;
+    else           return font_slave;
 }
 
 #else
@@ -234,20 +247,18 @@ void matrix_write_char_inner(struct CharacterMatrix *matrix, uint8_t c) {
   ++matrix->cursor;
 
   if (matrix->cursor - &matrix->display[0][0] == sizeof(matrix->display)) {
-    // We went off the end; scroll the display upwards by one line
-    memmove(&matrix->display[0], &matrix->display[1],
-            MatrixCols * (MatrixRows - 1));
-    matrix->cursor = &matrix->display[MatrixRows - 1][0];
-    memset(matrix->cursor, ' ', MatrixCols);
-  }
-}
-
-void matrix_write_char_inner_nolf(struct CharacterMatrix *matrix, uint8_t c) {
-  *matrix->cursor = c;
-  ++matrix->cursor;
-
-  if (matrix->cursor - &matrix->display[0][0] == sizeof(matrix->display)) {
-    matrix->cursor = &matrix->display[0][0];
+    if (matrix->page_mode)
+    {
+        matrix->cursor = &matrix->display[0][0];
+    }
+    else
+    {
+      // We went off the end; scroll the display upwards by one line
+      memmove(&matrix->display[0], &matrix->display[1],
+              MatrixCols * (MatrixRows - 1));
+      matrix->cursor = &matrix->display[MatrixRows - 1][0];
+      memset(matrix->cursor, ' ', MatrixCols);
+    }
   }
 }
 
@@ -268,24 +279,6 @@ void matrix_write_char(struct CharacterMatrix *matrix, uint8_t c) {
   matrix_write_char_inner(matrix, c);
 }
 
-
-void matrix_write_char_nolf(struct CharacterMatrix *matrix, uint8_t c) {
-  matrix->dirty = true;
-
-  if (c == '\n') {
-    // Clear to end of line from the cursor and then move to the
-    // start of the next line
-    uint8_t cursor_col = (matrix->cursor - &matrix->display[0][0]) % MatrixCols;
-
-    while (cursor_col++ < MatrixCols) {
-      matrix_write_char_inner_nolf(matrix, ' ');
-    }
-    return;
-  }
-
-  matrix_write_char_inner_nolf(matrix, c);
-}
-
 void iota_gfx_write_char(uint8_t c) {
   matrix_write_char(&display, c);
 }
@@ -294,14 +287,6 @@ void matrix_write(struct CharacterMatrix *matrix, const char *data) {
   const char *end = data + strlen(data);
   while (data < end) {
     matrix_write_char(matrix, *data);
-    ++data;
-  }
-}
-
-void matrix_write_nolf(struct CharacterMatrix *matrix, const char *data) {
-  const char *end = data + strlen(data);
-  while (data < end) {
-    matrix_write_char_nolf(matrix, *data);
     ++data;
   }
 }

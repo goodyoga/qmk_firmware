@@ -70,9 +70,11 @@ struct CharacterMatrix {
   uint8_t display[MatrixRows][MatrixCols];
   uint8_t *cursor;
   bool dirty;
+  bool  page_mode;
+#if defined(USE_SLAVE_FONT)
+  int   font_no;
+#endif
 };
-
-struct CharacterMatrix display;
 
 bool iota_gfx_init(bool rotate);
 void iota_gfx_task(void);
@@ -95,7 +97,11 @@ void matrix_write_char_inner_nolf(struct CharacterMatrix *matrix, uint8_t c);
 void matrix_write_char_nolf(struct CharacterMatrix *matrix, uint8_t c);
 void matrix_write_nolf(struct CharacterMatrix *matrix, const char *data);
 void matrix_render(struct CharacterMatrix *matrix);
-void matrix_set_is_master(bool is_master);
+void matrix_set_page_mode(bool enable);
+#if defined(USE_SLAVE_FONT)
+void matrix_set_font_no(int idx);
+#endif
+struct CharacterMatrix *matrix_getInstance(void);
 
 bool process_record_gfx(uint16_t keycode, keyrecord_t *record);
 
