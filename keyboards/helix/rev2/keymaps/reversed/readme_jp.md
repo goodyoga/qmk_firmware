@@ -98,7 +98,7 @@ void iota_gfx_task_user(void) {
 
 の変更で Slave 用フォントが使用され、4行のロゴが表示できます。
 
-master_set_page_mode() で page_mode を true にを設定しないと、ssd1603 ドライバのデフォルト動作として画面いっぱいに4行ロゴの描画が終わった時点で1行スクロールされます。 また、qmk/qmk_firmware オリジナルのコードではローカル変数の struct CharacterMatrix matrix に設定した内容を ssd1603.c::display にコピーするようになっていましたが、 page_mode の設定がうまく伝わらないタイミングがあるのかロゴがちらつきましたので、直接 matrix_getInstance() で ssd1603.c のインスタンスを取得し Update するように変更しました。
+master_set_page_mode() で page_mode を true にを設定しないと、ssd1306 ドライバのデフォルト動作として画面いっぱいに4行ロゴの描画が終わった時点で1行スクロールされます。 また、qmk/qmk_firmware オリジナルのコードではローカル変数の struct CharacterMatrix matrix に設定した内容を ssd1306.c::display にコピーするようになっていましたが、 page_mode の設定がうまく伝わらないタイミングがあるのかロゴがちらつきましたので、直接 matrix_getInstance() で ssd1306.c のインスタンスを取得し Update するように変更しました。
 
 build
 ```
