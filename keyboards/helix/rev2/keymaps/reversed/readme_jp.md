@@ -1,4 +1,4 @@
-# The Default Helix Layout
+# The Reversed Helix Layout
 ## 配列
 
 ### Qwerty配列
@@ -10,14 +10,12 @@
         | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
         |------+------+------+------+------+------|------+------+------+------+------+------|
         | Ctrl |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  | ENT  |
- |------|------+------+------+------+------+------+------+------+------+------+------+------------|
+ |------|------+------+------+------+------+------+------+------+------+------+------+-------------|
  |RAISE | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  | SFT  |LOWER |
  |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
  |Adjust| CTL  | Alt  | GUI  |      |Lower |Space |Space |Raise | ALT  | GUI  | APP  | CTL  |Right |
  `-------------------------------------------------------------------------------------------------'
 ```
-
-他の配列(Colemak,Dvorak)は、[readme.md](readme.md) を参照
 
 Helix キットの右と左を入れ替えて左右をくっつけてミニキーボードの用に使うコンフィグレーションです。
 
@@ -30,21 +28,31 @@ RAISE で矢印＋Page系のキー、LOWER で記号系のキーというマッ�
 このコンフィグレーション用に追加したオプションのみ記載します。
 
 ### Slave 側で4行のロゴを使用する
+
+Helix 標準では 3行×21文字でロゴを表示しますが、このオプションを有効にすると 4行×21文字でロゴを表示することができます。
+
 4行のロゴを使用する場合は Slave用のフォントを helixfont_slave.h として用意する必要があります。
+Slave 側の変数名は font_slave[] としてください。 ヘッダの二重インクルード防止の ifdef も FONT5X7_H の部分2箇所を FONT5X7_SLAVE_H に変更する必要があります。 
 
-ロゴは ASCII コードの { 0x60-0x74, 0x80-0x94, 0xA0-0xB4, 0xC0-0xD4 } の領域に配置してください。
+現状は LOCAL_GLCDFONT に依存していますので Master 側も helixfont.h を用意してください。
+Master 側は helix/common/glcdfont.c の中身そのままで大丈夫です。
 
+rules.mk にて USE_SLAVE_FONT を yes に設定してください。
+
 ```
+LOCAL_GLCDFONT    = yes     # use each keymaps "helixfont.h" insted of "common/glcdfont.c"
 USE_SLAVE_FONT    = yes     # use another font for slave.
 ```
 
-また、この設定のために keymaps/ 以下のファイル以外に下記のファイルを変更しています。
+また、この設定のために keymaps/ 以下のファイル以外に下記のファイルを変更していますので、必要に応じてこの fork から取得してください。
 ```
 qmk_firmware/keyboards/helix/local_drivers/ssd1306.c
 qmk_firmware/keyboards/helix/local_drivers/ssd1306.h
 qmk_firmware/keyboards/helix/local_drivers/ssd1306.c
 qmk_firmware/keyboards/helix/rev2/local_features.mk
 ```
+
+ロゴは ASCII コードの { 0x60-0x74, 0x80-0x94, 0xA0-0xB4, 0xC0-0xD4 } の領域に配置してください。
 
 keymap.c 側では
 ```
