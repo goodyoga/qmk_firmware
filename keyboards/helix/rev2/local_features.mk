@@ -87,6 +87,10 @@ ifeq ($(strip $(LOCAL_GLCDFONT)), yes)
     OPT_DEFS += -DLOCAL_GLCDFONT
 endif
 
+ifeq ($(strip $(FONT_SIZE_LARGE)), yes)
+    OPT_DEFS += -DFONT_SIZE_LARGE
+endif
+
 ifneq ($(strip $(SHOW_HELIX_OPTIONS)),)
   $(eval $(call HELIX_CUSTOMISE_MSG))
   ifneq ($(strip $(SHOW_VERBOSE_INFO)),)

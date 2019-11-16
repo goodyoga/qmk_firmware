@@ -39,5 +39,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
    //#define RGBLIGHT_EFFECT_ALTERNATING
 #endif
 
-#undef RGBLED_NUM
-#define RGBLED_NUM 64
+
+/* You need ifdef-else patch for MATRIX_COL_PINS in rev2/config.h */
+//#define  REVERSED_COL_PINS
+
+#if defined(RESERVED_COL_PINS)
+#define  REVERSED_COL_PINS_KEYMAP
+#endif
+
+

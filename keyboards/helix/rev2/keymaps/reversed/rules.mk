@@ -13,6 +13,7 @@ LINK_TIME_OPTIMIZATION_ENABLE = no  # if firmware size over limit, try this opti
 HELIX_ROWS = 5              # Helix Rows is 4 or 5
 OLED_ENABLE = yes           # OLED_ENABLE
 LOCAL_GLCDFONT = yes        # use each keymaps "helixfont.h" insted of "common/glcdfont.c"
+# FONT_SIZE_LARGE = yes     # needs LOCAL_GLCDFONT, still buggy. 
 LED_BACK_ENABLE = yes       # LED backlight (Enable WS2812 RGB underlight.)
 # LED_UNDERGLOW_ENABLE = no   # LED underglow (Enable WS2812 RGB underlight.)
 LED_ANIMATIONS = yes        # LED animations

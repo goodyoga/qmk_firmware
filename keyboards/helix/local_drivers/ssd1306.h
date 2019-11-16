@@ -55,8 +55,13 @@ enum ssd1306_cmds {
 #define DisplayHeight 32
 #define DisplayWidth 128
 
+#if defined(FONT_SIZE_LARGE)
+#define FontHeight 16
+#define FontWidth 12
+#else
 #define FontHeight 8
 #define FontWidth 6
+#endif
 
 #define MatrixRows (DisplayHeight / FontHeight)
 #define MatrixCols (DisplayWidth / FontWidth)
