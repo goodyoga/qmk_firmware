@@ -9,6 +9,9 @@
 #include "common/glcdfont.c"
 #else
 #include <helixfont.h>
+#if defined(USE_SLAVE_FONT)
+#include <helixfont_slave.h>
+#endif
 #endif
 #ifdef ADAFRUIT_BLE_ENABLE
 #include "adafruit_ble.h"
@@ -38,6 +41,32 @@ static uint8_t displaying;
 static uint16_t last_flush;
 
 static bool force_dirty = true;
+
+#if defined(USE_SLAVE_FONT)
+static bool  is_master = false;
+
+
+void  matrix_set_is_master(bool m)
+{
+    is_master = m;
+}
+
+
+const uint8_t *get_font(void)
+{
+    if (is_master)
+         return font;
+    else
+         return font_slave;
+}
+
+#else
+const uint8_t *get_font(void)
+{
+    return font;
+}
+#endif
+
 
 // Write command sequence.
 // Returns true on success.
@@ -213,6 +242,15 @@ void matrix_write_char_inner(struct CharacterMatrix *matrix, uint8_t c) {
   }
 }
 
+void matrix_write_char_inner_nolf(struct CharacterMatrix *matrix, uint8_t c) {
+  *matrix->cursor = c;
+  ++matrix->cursor;
+
+  if (matrix->cursor - &matrix->display[0][0] == sizeof(matrix->display)) {
+    matrix->cursor = &matrix->display[0][0];
+  }
+}
+
 void matrix_write_char(struct CharacterMatrix *matrix, uint8_t c) {
   matrix->dirty = true;
 
@@ -230,6 +268,24 @@ void matrix_write_char(struct CharacterMatrix *matrix, uint8_t c) {
   matrix_write_char_inner(matrix, c);
 }
 
+
+void matrix_write_char_nolf(struct CharacterMatrix *matrix, uint8_t c) {
+  matrix->dirty = true;
+
+  if (c == '\n') {
+    // Clear to end of line from the cursor and then move to the
+    // start of the next line
+    uint8_t cursor_col = (matrix->cursor - &matrix->display[0][0]) % MatrixCols;
+
+    while (cursor_col++ < MatrixCols) {
+      matrix_write_char_inner_nolf(matrix, ' ');
+    }
+    return;
+  }
+
+  matrix_write_char_inner_nolf(matrix, c);
+}
+
 void iota_gfx_write_char(uint8_t c) {
   matrix_write_char(&display, c);
 }
@@ -238,6 +294,14 @@ void matrix_write(struct CharacterMatrix *matrix, const char *data) {
   const char *end = data + strlen(data);
   while (data < end) {
     matrix_write_char(matrix, *data);
+    ++data;
+  }
+}
+
+void matrix_write_nolf(struct CharacterMatrix *matrix, const char *data) {
+  const char *end = data + strlen(data);
+  while (data < end) {
+    matrix_write_char_nolf(matrix, *data);
     ++data;
   }
 }
@@ -292,8 +356,7 @@ void matrix_render(struct CharacterMatrix *matrix) {
 
   for (uint8_t row = 0; row < MatrixRows; ++row) {
     for (uint8_t col = 0; col < MatrixCols; ++col) {
-      const uint8_t *glyph = font + (matrix->display[row][col] * FontWidth);
-
+      const uint8_t *glyph = get_font() + (matrix->display[row][col] * FontWidth);
       for (uint8_t glyphCol = 0; glyphCol < FontWidth; ++glyphCol) {
         uint8_t colBits = pgm_read_byte(glyph + glyphCol);
         i2c_master_write(colBits);

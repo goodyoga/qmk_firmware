@@ -12,6 +12,7 @@ define HELIX_CUSTOMISE_MSG
   $(info -  LED_UNDERGLOW_ENABLE = $(LED_UNDERGLOW_ENABLE))
   $(info -  LED_ANIMATION        = $(LED_ANIMATIONS))
   $(info -  IOS_DEVICE_ENABLE    = $(IOS_DEVICE_ENABLE))
+  $(info -  USE_SLAVE_FONT       = $(USE_SLAVE_FONT))
   $(info )
 endef
 
@@ -45,6 +46,9 @@ endef
     endif
     ifeq ($(findstring verbose,$(HELIX)), verbose)
        SHOW_VERBOSE_INFO = yes
+    endif
+    ifeq ($(findstring slave_font,$(HELIX)), slave_font)
+       USE_SLAVE_FONT = yes
     endif
     SHOW_HELIX_OPTIONS = yes
   endif
@@ -90,6 +94,11 @@ endif
 ifeq ($(strip $(FONT_SIZE_LARGE)), yes)
     OPT_DEFS += -DFONT_SIZE_LARGE
 endif
+
+ifeq ($(strip $(USE_SLAVE_FONT)), yes)
+    OPT_DEFS += -DUSE_SLAVE_FONT
+endif
+
 
 ifneq ($(strip $(SHOW_HELIX_OPTIONS)),)
   $(eval $(call HELIX_CUSTOMISE_MSG))
