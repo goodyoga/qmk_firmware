@@ -4,129 +4,95 @@
 ### Qwerty配列
 
 ```
- ,-----------------------------------------.             ,-----------------------------------------.
- |   `  |   1  |   2  |   3  |   4  |   5  |             |   6  |   7  |   8  |   9  |   0  | Del  |
- |------+------+------+------+------+------|             |------+------+------+------+------+------|
- | Tab  |   Q  |   W  |   E  |   R  |   T  |             |   Y  |   U  |   I  |   O  |   P  | Bksp |
- |------+------+------+------+------+------|             |------+------+------+------+------+------|
- | Ctrl |   A  |   S  |   D  |   F  |   G  |             |   H  |   J  |   K  |   L  |   ;  |  '   |
+        ,-----------------------------------------------------------------------------------.
+        | ZKHK |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Del  |
+        |------+------+------+------+------+------|------+------+------+------+------+------|
+        | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+        |------+------+------+------+------+------|------+------+------+------+------+------|
+        | Ctrl |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  | ENT  |
+ |------|------+------+------+------+------+------+------+------+------+------+------+------------|
+ |RAISE | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  | SFT  |LOWER |
  |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
- | Shift|   Z  |   X  |   C  |   V  |   B  |   [  |   ]  |   N  |   M  |   ,  |   .  |   /  |Enter |
- |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
- |Adjust| Esc  | Alt  | GUI  | EISU |Lower |Space |Space |Raise | KANA | Left | Down |  Up  |Right |
+ |Adjust| CTL  | Alt  | GUI  |      |Lower |Space |Space |Raise | ALT  | GUI  | APP  | CTL  |Right |
  `-------------------------------------------------------------------------------------------------'
 ```
 
 他の配列(Colemak,Dvorak)は、[readme.md](readme.md) を参照
+Helix キットの右と左を入れ替えて左右をくっつけてミニキーボードの用に使うコンフィグレーションです。
+他レイヤーのキーマップについては reversed/keymap.c を参照してください。
+RAISE で矢印＋Page系のキー、LOWER で記号系のキーというマップにしています。
+ビルド・動作確認は Helix 5行版でのみ行っています。
 
 ## カスタマイズ
+カスタマイズの方法は Helix default に準じます。
+このコンフィグレーション用に追加したオプションのみ記載します。
 
-Helix キーボードを4行版として製作したり、オプションの OLED をつけたり、
-RGB バックライトまたは、RGB Underglow をつけた場合は、
-`qmk_firmware/keyboards/helix/rev2/keymaps/default/rules.mk` の以下の部分を編集して機能を有効化してください。
-
-```
-# Helix Spacific Build Options
-# you can uncomment and edit follows 7 Variables
-#  jp: 以下の7つの変数を必要に応じて編集し、コメントアウトをはずします。
-# HELIX_ROWS = 5              # Helix Rows is 4 or 5
-# OLED_ENABLE = no            # OLED_ENABLE
-# LOCAL_GLCDFONT = no         # use each keymaps "helixfont.h" insted of "common/glcdfont.c"
-# LED_BACK_ENABLE = no        # LED backlight (Enable WS2812 RGB underlight.)
-# LED_UNDERGLOW_ENABLE = no   # LED underglow (Enable WS2812 RGB underlight.)
-# LED_ANIMATIONS = yes        # LED animations
-# IOS_DEVICE_ENABLE = no      # connect to IOS device (iPad,iPhone)
-```
-
-## 4行版Helix に対応する
-
-rules.mk の下記の部分を編集して 5 を 4 に変更してください。
+### Slave 側で4行のロゴを使用する
+4行のロゴを使用する場合は Slave用のフォントを helixfont_slave.h として用意する必要があります。
+ロゴは ASCII コードの { 0x60-0x74, 0x80-0x94, 0xA0-0xB4, 0xC0-0xD4 } の領域に配置してください。
 
 ```
-HELIX_ROWS = 4              # Helix Rows is 4 or 5
+USE_SLAVE_FONT    = yes     # use another font for slave.
 ```
 
-## RGB バックライトを有効にする
+また、この設定のために keymaps/ 以下のファイル以外に下記のファイルを変更しています。
+qmk_firmware/keyboards/helix/local_drivers/ssd1306.c
+qmk_firmware/keyboards/helix/local_drivers/ssd1306.h
+qmk_firmware/keyboards/helix/local_drivers/ssd1306.c
+qmk_firmware/keyboards/helix/rev2/local_features.mk
 
-rules.mk の下記の部分を編集して no を yes に変更してください。
 
+keymap.c 側では
+static void render_logo(struct CharacterMatrix *matrix) {
+
+  static char logo[]={
+#if defined(USE_SLAVE_FONT)
+    0x60,0x61,0x62,0x63,0x64,0x65,0x66,0x67,0x68,0x69,0x6a,0x6b,0x6c,0x6d,0x6e,0x6f,0x70,0x71,0x72,0x73,0x74,
+#endif
+    0x80,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x8f,0x90,0x91,0x92,0x93,0x94,
+    0xa0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,
+    0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,
+    0};
+  matrix_write(matrix, logo);
+  //matrix_write_P(&matrix, PSTR(" Split keyboard kit"));
+}
+
+にするのと
+
+void iota_gfx_task_user(void) {
+  struct CharacterMatrix *p_matrix = matrix_getInstance();
+
+#if DEBUG_TO_SCREEN
+  if (debug_enable) {
+    return;
+  }
+#endif
+
+#if defined(USE_SLAVE_FONT)
+  matrix_set_page_mode(!is_master);
+  matrix_set_font_no(is_master ? 0 : 1);
+#endif
+  matrix_clear(p_matrix);
+  if(is_master){
+    render_status(p_matrix);
+  }else{
+    render_logo(p_matrix);
+  }
+}
+
+の変更で Slave 用フォントが使用され、4行のロゴが使用できます。
+
+page_mode true にを設定しないと、画面いっぱいにログの描画が終わった時点でスクロールされます。 また、オリジナルのコードではローカル変数の struct CharacterMatrix matrix に設定した内容を ssd1603.c::display にコピーするようになっていましたが、 page_mode の設定がうまく伝わらないタイミングがあるのかロゴがちらつきましたので、直接 matrix_getInstance() で ssd1603.c のインスタンスを取得し Update するように変更しました。
+
+build
 ```
-LED_BACK_ENABLE = yes        # LED backlight (Enable WS2812 RGB underlight.)
-```
-
-## RGB Underglow を有効にする
-
-rules.mk の下記の部分を編集して no を yes に変更してください。
-```
-LED_UNDERGLOW_ENABLE = yes   # LED underglow (Enable WS2812 RGB underlight.)
-```
-
-## OLEDを有効にする
-
-rules.mk の下記の部分を編集して no を yes に変更してください。
-```
-OLED_ENABLE = yes            # OLED_ENABLE
-```
-
-## iPad/iPhoneサポートを有効にする。
-
-rules.mk の下記の部分を編集して no を yes に変更してください。
-RBG Underglow や RGBバックライトの輝度を抑えて、iPad, iPhone にも接続できるようになります。
-
-```
-IOS_DEVICE_ENABLE = no      # connect to IOS device (iPad,iPhone)
-```
-
-## コンパイルの仕方
-
-コンパイルは、qmk_firmware のトップディレクトリで行います。
-
-```
-$ cd qmk_firmware
-```
-qmk_firmwareでは各キーボードのコンパイルは、`<キーボード名>:<キーマップ名>`という指定で行います。
-
-```
-$ make helix:default
-```
-
-キーボードへの書き込みまで同時に行うには下記のように`:flash`を付けます。
-
-```
-$ make helix:default:flash
-```
-
-コンパイル結果と中間生成物を消去したい場合は以下のようにします。
-
-```
-$ make helix:default:clean
+$ make helix:reversed
 ```
 
-上記の、rules.mk によるカスタマイズ項目の一部は下記のようにコマンド上で直接指定することも可能です。
+flash to keyboard
+```
+$ make helix:reversed:flash
 
-OLED を有効にしてコンパイルしてキーボードへの書き込む。
-```
-$ make helix/rev2/oled:default:flash
-```
-
-RGB バックライトを有効にしてコンパイルしてキーボードへ書き込む。
-```
-$ make helix/rev2/back:default:flash
-```
-
-RGB Underglow を有効にしてコンパイルしてキーボードへ書き込む。
-```
-$ make helix/rev2/under:default:flash
-```
-
-OLED とRGB バックライトを有効にしてコンパイルしてキーボードへ書き込む。
-```
-$ make helix/rev2/oled/back:default:flash
-```
-
-OLED とRGB Underglowを有効にしてコンパイルしてキーボードへ書き込む。
-```
-$ make helix/rev2/oled/under:default:flash
 ```
 
 ## リンク
