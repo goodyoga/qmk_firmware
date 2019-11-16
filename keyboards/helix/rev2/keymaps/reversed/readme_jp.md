@@ -32,7 +32,8 @@ RAISE で矢印＋Page系のキー、LOWER で記号系のキーというマッ�
 Helix 標準では 3行×21文字でロゴを表示しますが、このオプションを有効にすると 4行×21文字でロゴを表示することができます。
 
 4行のロゴを使用する場合は Slave用のフォントを helixfont_slave.h として用意する必要があります。
-Slave 側の変数名は font_slave[] としてください。 ヘッダの二重インクルード防止の ifdef も FONT5X7_H の部分2箇所を FONT5X7_SLAVE_H に変更する必要があります。  なお、slave 用に Master と同じデフォルトのフォントを使用すると、3行ロゴ上部に上下逆さまの小文字が表示されます。
+Slave 側の変数名は font_slave[] としてください。 ヘッダの二重インクルード防止の ifdef も FONT5X7_H の部分2箇所を FONT5X7_SLAVE_H に変更する必要があります。 
+ロゴは ASCII コードの { 0x60-0x74, 0x80-0x94, 0xA0-0xB4, 0xC0-0xD4 } の領域に配置してください。 なお、slave 用に Master と同じデフォルトのフォントを使用すると、3行ロゴ下部に上下逆さまの小文字が表示されます。
 
 現状は LOCAL_GLCDFONT 設定に依存していますので Master 側も helixfont.h を用意してください。
 Master 側は helix/common/glcdfont.c の中身そのままコピペで大丈夫です。
@@ -53,7 +54,6 @@ qmk_firmware/keyboards/helix/local_drivers/ssd1306.c
 qmk_firmware/keyboards/helix/rev2/local_features.mk
 ```
 
-ロゴは ASCII コードの { 0x60-0x74, 0x80-0x94, 0xA0-0xB4, 0xC0-0xD4 } の領域に配置してください。
 
 keymap.c 側では
 ```
