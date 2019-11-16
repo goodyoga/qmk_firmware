@@ -89,6 +89,7 @@ LED_BACK_ENABLE   = yes     # LED backlight (Enable WS2812 RGB underlight.)
 LED_ANIMATIONS    = yes     # LED animations
 IOS_DEVICE_ENABLE = no      # connect to IOS device (iPad,iPhone)```
 ## Compile
+```
 
 go to qmk top directory.
 ```
