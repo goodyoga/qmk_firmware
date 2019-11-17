@@ -98,10 +98,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
 #if defined( REVERSED_COL_PINS_KEYMAP )
   [_LOWER] = LAYOUT( \
-             KC_GRV , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_PSLS,   KC_PAST, KC_AT  , KC_MINS, KC_EQL , KC_BSLS, KC_DEL , \
+             KC_GRV , KC_NO  , KC_NO  , KC_NO  , KC_QUOT, KC_PSLS,   KC_PAST, KC_AT  , KC_MINS, KC_EQL , KC_BSLS, KC_DEL , \
              _______, KC_EXLM, KC_DQT , KC_HASH, KC_DLR , KC_PERC,   KC_AMPR, KC_LCBR, KC_RCBR, KC_LBRC, KC_RBRC, KC_BSLS, \
              _______, KC_AT  , KC_GRV , KC_ASTR, KC_BSLS, KC_PIPE,   KC_SCLN, KC_COLN, KC_DQT , KC_LPRN, KC_RPRN, _______, \
-    _______, _______, KC_CIRC, KC_TILD, KC_UNDS, KC_PMNS, KC_PPLS,   KC_UNDS, KC_COMM, KC_DOT , KC_SLSH, KC_RO  , _______, _______, \
+    _______, _______, KC_CIRC, KC_TILD, KC_UNDS, KC_PMNS, KC_PPLS,   KC_UNDS, KC_COMM, KC_DOT , KC_SLSH, KC_INT1, _______, _______, \
     _______, _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______, _______  \
     ),
 #else
@@ -199,42 +199,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       ADJUST,  KC_ESC,  KC_LALT, KC_LGUI, EISU,    LOWER,   KC_SPC,  KC_SPC,  RAISE,   KANA,    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
       ),
 
-  /* Colemak
-   * ,-----------------------------------------.             ,-----------------------------------------.
-   * | Tab  |   Q  |   W  |   F  |   P  |   G  |             |   J  |   L  |   U  |   Y  |   ;  | Bksp |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * | Ctrl |   A  |   R  |   S  |   T  |   D  |             |   H  |   N  |   E  |   I  |   O  |  '   |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * | Shift|   Z  |   X  |   C  |   V  |   B  |             |   K  |   M  |   ,  |   .  |   /  |Enter |
-   * |------+------+------+------+------+------+-------------+------+------+------+------+------+------|
-   * |Adjust| Esc  | Alt  | GUI  | EISU |Lower |Space |Space |Raise | KANA | Left | Down |  Up  |Right |
-   * `-------------------------------------------------------------------------------------------------'
-   */
-  [_COLEMAK] = LAYOUT( \
-      KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,                      KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC, \
-      KC_LCTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_D,                      KC_H,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT, \
-      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                      KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT , \
-      ADJUST,  KC_ESC,  KC_LALT, KC_LGUI, EISU,    LOWER,   KC_SPC,  KC_SPC,  RAISE,   KANA,    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
-      ),
-
-  /* Dvorak
-   * ,-----------------------------------------.             ,-----------------------------------------.
-   * | Tab  |   '  |   ,  |   .  |   P  |   Y  |             |   F  |   G  |   C  |   R  |   L  | Del  |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * | Ctrl |   A  |   O  |   E  |   U  |   I  |             |   D  |   H  |   T  |   N  |   S  |  /   |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * | Shift|   ;  |   Q  |   J  |   K  |   X  |             |   B  |   M  |   W  |   V  |   Z  |Enter |
-   * |------+------+------+------+------+------+-------------+------+------+------+------+------+------|
-   * |Adjust| Esc  | Alt  | GUI  | EISU |Lower |Space |Space |Raise | KANA | Left | Down |  Up  |Right |
-   * `-------------------------------------------------------------------------------------------------'
-   */
-  [_DVORAK] = LAYOUT( \
-      KC_TAB,  KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,                      KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_DEL, \
-      KC_LCTL, KC_A,    KC_O,    KC_E,    KC_U,    KC_I,                      KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    KC_SLSH, \
-      KC_LSFT, KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,                      KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    KC_ENT , \
-      ADJUST,  KC_ESC,  KC_LALT, KC_LGUI, EISU,    LOWER,   KC_SPC,  KC_SPC,  RAISE,   KANA,    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
-      ),
-
   /* Lower
    * ,-----------------------------------------.             ,-----------------------------------------.
    * |   ~  |   !  |   @  |   #  |   $  |   %  |             |   ^  |   &  |   *  |   (  |   )  |      |
@@ -298,8 +262,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #ifdef AUDIO_ENABLE
 
 float tone_qwerty[][2]     = SONG(QWERTY_SOUND);
-float tone_dvorak[][2]     = SONG(DVORAK_SOUND);
-float tone_colemak[][2]    = SONG(COLEMAK_SOUND);
 float tone_plover[][2]     = SONG(PLOVER_SOUND);
 float tone_plover_gb[][2]  = SONG(PLOVER_GOODBYE_SOUND);
 float music_scale[][2]     = SONG(MUSIC_SCALE_SOUND);
@@ -455,9 +417,6 @@ void music_scale_user(void)
 #endif
 
 
-//SSD1306 OLED update loop, make sure to add #define SSD1306OLED in config.h
-#ifdef SSD1306OLED
-
 void matrix_scan_user(void) {
      iota_gfx_task();  // this is what updates the display continuously
 }
@@ -485,28 +444,8 @@ static void render_logo(struct CharacterMatrix *matrix) {
 
 
 
-void render_status(struct CharacterMatrix *matrix) {
-
-  // Render to mode icon
-  static char logo[][2][3]={
-    {
-        { 0x95, 0x96, 0},
-        { 0xb5, 0xb6, 0} },
-    {
-        { 0x97, 0x98, 0},
-        { 0xb7, 0xb8, 0} }
-  };
-  if(keymap_config.swap_lalt_lgui==false){
-    matrix_write(matrix, logo[0][0]);
-    matrix_write_P(matrix, PSTR("\n"));
-    matrix_write(matrix, logo[0][1]);
-  }else{
-    matrix_write(matrix, logo[1][0]);
-    matrix_write_P(matrix, PSTR("\n"));
-    matrix_write(matrix, logo[1][1]);
-  }
-
-  // Define layers here, Have not worked out how to have text displayed for each layer. Copy down the number you see and add a case for it below
+void render_status(struct CharacterMatrix *matrix)
+{
   char buf[40];
   snprintf(buf,sizeof(buf), "Undef-%ld", layer_state);
     switch (layer_state) {
@@ -517,23 +456,26 @@ void render_status(struct CharacterMatrix *matrix) {
            matrix_write_P(matrix, PSTR("  R A I S E  "));
            break;
         case L_LOWER:
-           matrix_write_P(matrix, PSTR("  L O W E R  "));
+           matrix_write_P(matrix, PSTR("      ' / * @ - = \\\n"));
+           matrix_write_P(matrix, PSTR("! \" # $ % & { } [ ]\n"));
+           matrix_write_P(matrix, PSTR("@ ` * \\ | ; : \" ( )\n"));
+           matrix_write_P(matrix, PSTR("^ ~ _ - + _ , . /"));
            break;
         case L_ADJUST:
         case L_ADJUST_TRI:
-           matrix_write_P(matrix, PSTR("    A D J    "));
-           break;
+        {
+            char l2[] = { 0x20,0x20, 0x80,0x20, 0x81,0x20, '\n', 0x00 };
+            char l3[] = { 0x20,0x20, 0x83,0x20, 0x84,0x20, 0x85,0x86, 0x20,0x20, 0xA0,0xA1,0xA2,0xA3,0xA4,0xA5,0xA6,0xA7,'\n', 0x00 };
+            char l4[] = { 0x20,0x20, 0x20,0x20, 0x20,0x20, 0x20,0x20, 0x20,0x20, 0xC0,0xC1,0xC2,0xC3,0xC4,0xC5,0xC6,0xC7, 0x00 };
+            matrix_write_P(matrix, PSTR("\n"));
+            matrix_write(matrix, l2);
+            matrix_write(matrix, l3);
+            matrix_write(matrix, l4);
+            break;
+        }
         default:
            matrix_write(matrix, buf);
     }
-
-  // Host Keyboard LED Status
-  char led[40];
-    snprintf(led, sizeof(led), "\n%s  %s  %s",
-            (host_keyboard_leds() & (1<<USB_LED_NUM_LOCK   )) ? "NMLK" : "    ",
-            (host_keyboard_leds() & (1<<USB_LED_CAPS_LOCK  )) ? "CAPS" : "    ",
-            (host_keyboard_leds() & (1<<USB_LED_SCROLL_LOCK)) ? "SCLK" : "    ");
-  matrix_write(matrix, led);
 }
 
 
@@ -558,4 +500,3 @@ void iota_gfx_task_user(void) {
   }
 }
 
-#endif
