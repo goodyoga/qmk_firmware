@@ -392,10 +392,11 @@ void matrix_scan_user(void) {
 #define L_RAISE (1<<_RAISE)
 #define L_ADJUST (1<<_ADJUST)
 #define L_ADJUST_TRI (L_ADJUST|L_RAISE|L_LOWER)
+#define L_UNDEF  (-1)
 
-static void render_logo(struct CharacterMatrix *matrix) {
-
-  static char logo[]={
+static void render_logo(struct CharacterMatrix *matrix)
+ {
+    static char logo[]={
 #if defined(USE_SLAVE_FONT)
     0x60,0x61,0x62,0x63,0x64,0x65,0x66,0x67,0x68,0x69,0x6a,0x6b,0x6c,0x6d,0x6e,0x6f,0x70,0x71,0x72,0x73,0x74,
 #endif
@@ -403,65 +404,71 @@ static void render_logo(struct CharacterMatrix *matrix) {
     0xa0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,
     0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,
     0};
-  matrix_write(matrix, logo);
-  //matrix_write_P(&matrix, PSTR(" Split keyboard kit"));
+
+    matrix_clear(matrix);
+    matrix_write(matrix, logo);
 }
 
 
+static long int  old_layer_state = L_UNDEF;
 
 void render_status(struct CharacterMatrix *matrix)
 {
-  char buf[40];
-  snprintf(buf,sizeof(buf), "Undef-%ld", layer_state);
+    char buf[40];
+
+    if (old_layer_state == layer_state)
+        return;
+
+    matrix_clear(matrix);
+    snprintf(buf,sizeof(buf), "Undef-%ld", layer_state);
     switch (layer_state) {
-        case L_BASE:
-           matrix_write_P(matrix, PSTR(" Q W E R T Y "));
-           break;
-        case L_RAISE:
-           matrix_write_P(matrix, PSTR("  R A I S E  "));
-           break;
-        case L_LOWER:
-           matrix_write_P(matrix, PSTR("      ' / * @ - = \\\n"));
-           matrix_write_P(matrix, PSTR("! \" # $ % & { } [ ]\n"));
-           matrix_write_P(matrix, PSTR("@ ` * \\ | ; : \" ( )\n"));
-           matrix_write_P(matrix, PSTR("^ ~ _ - + _ , . /"));
-           break;
-        case L_ADJUST:
-        case L_ADJUST_TRI:
-        {
-            char l2[] = { 0x20,0x20, 0x80,0x20, 0x81,0x20, '\n', 0x00 };
-            char l3[] = { 0x20,0x20, 0x83,0x20, 0x84,0x20, 0x85,0x86, 0x20,0x20, 0xA0,0xA1,0xA2,0xA3,0xA4,0xA5,0xA6,0xA7,'\n', 0x00 };
-            char l4[] = { 0x20,0x20, 0x20,0x20, 0x20,0x20, 0x20,0x20, 0x20,0x20, 0xC0,0xC1,0xC2,0xC3,0xC4,0xC5,0xC6,0xC7, 0x00 };
-            matrix_write_P(matrix, PSTR("\n"));
-            matrix_write(matrix, l2);
-            matrix_write(matrix, l3);
-            matrix_write(matrix, l4);
-            break;
-        }
-        default:
-           matrix_write(matrix, buf);
+    case L_BASE:
+        matrix_write_P(matrix, PSTR(" Q W E R T Y "));
+        break;
+    case L_RAISE:
+        matrix_write_P(matrix, PSTR("  R A I S E  "));
+        break;
+    case L_LOWER:
+        matrix_write_P(matrix, PSTR("      ' / * @ - = \\\n"));
+        matrix_write_P(matrix, PSTR("! \" # $ % & { } [ ]\n"));
+        matrix_write_P(matrix, PSTR("@ ` * \\ | ; : \" ( )\n"));
+        matrix_write_P(matrix, PSTR("^ ~ _ - + _ , . /"));
+        break;
+    case L_ADJUST:
+    case L_ADJUST_TRI:
+    {
+        char l2[] = { 0x20,0x20, 0x80,0x20, 0x81,0x20, '\n', 0x00 };
+        char l3[] = { 0x20,0x20, 0x83,0x20, 0x84,0x20, 0x85,0x86, 0x20,0x20, 0xA0,0xA1,0xA2,0xA3,0xA4,0xA5,0xA6,0xA7,'\n', 0x00 };
+        char l4[] = { 0x20,0x20, 0x20,0x20, 0x20,0x20, 0x20,0x20, 0x20,0x20, 0xC0,0xC1,0xC2,0xC3,0xC4,0xC5,0xC6,0xC7, 0x00 };
+ 
+        matrix_write_P(matrix, PSTR("\n"));
+        matrix_write(matrix, l2);
+        matrix_write(matrix, l3);
+        matrix_write(matrix, l4);
+        break;
     }
+    default:
+        matrix_write(matrix, buf);
+    }
+    old_layer_state = layer_state;
 }
 
 
-void iota_gfx_task_user(void) {
-  struct CharacterMatrix *p_matrix = matrix_getInstance();
+void iota_gfx_task_user(void)
+{
+    struct CharacterMatrix *p_matrix = matrix_getInstance();
 
 #if DEBUG_TO_SCREEN
-  if (debug_enable) {
-    return;
-  }
+    if (debug_enable) {
+      return;
+    }
 #endif
 
 #if defined(USE_SLAVE_FONT)
-  matrix_set_page_mode(!is_master);
-  matrix_set_font_no(is_master ? 0 : 1);
+    matrix_set_page_mode(!is_master);
+    matrix_set_font_no(is_master ? 0 : 1);
 #endif
-  matrix_clear(p_matrix);
-  if(is_master){
-    render_status(p_matrix);
-  }else{
-    render_logo(p_matrix);
-  }
+    if (is_master) {  render_status(p_matrix);  }
+    else           {  render_logo(p_matrix);    }
 }
 
