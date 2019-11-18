@@ -386,13 +386,9 @@ void matrix_scan_user(void) {
      iota_gfx_task();  // this is what updates the display continuously
 }
 
-//assign the right code to your layers for OLED display
-#define L_BASE 0
-#define L_LOWER (1<<_LOWER)
-#define L_RAISE (1<<_RAISE)
-#define L_ADJUST (1<<_ADJUST)
-#define L_ADJUST_TRI (L_ADJUST|L_RAISE|L_LOWER)
-#define L_UNDEF  (-1)
+
+static  long unsigned int  logo_state = 0;
+#define  LOGO_STATE_TMO   10000
 
 static void render_logo(struct CharacterMatrix *matrix)
  {
@@ -405,9 +401,23 @@ static void render_logo(struct CharacterMatrix *matrix)
     0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,
     0};
 
-    matrix_clear(matrix);
-    matrix_write(matrix, logo);
+    if (  0 == (logo_state % LOGO_STATE_TMO ) )
+    {
+        matrix_clear(matrix);
+        matrix_write(matrix, logo);
+        logo_state++;
+    }
 }
+
+
+
+//assign the right code to your layers for OLED display
+#define L_BASE 0
+#define L_LOWER (1<<_LOWER)
+#define L_RAISE (1<<_RAISE)
+#define L_ADJUST (1<<_ADJUST)
+#define L_ADJUST_TRI (L_ADJUST|L_RAISE|L_LOWER)
+#define L_UNDEF  (-1)
 
 
 static long int  old_layer_state = L_UNDEF;
