@@ -50,6 +50,10 @@ endef
     ifeq ($(findstring slave_font,$(HELIX)), slave_font)
        USE_SLAVE_FONT = yes
     endif
+    ifeq ($(findstring slave_font,$(HELIX)), reversed_col_pins_keymap)
+       REVERSED_COL_PINS_KEYMAP = yes
+    endif
+
     SHOW_HELIX_OPTIONS = yes
   endif
 
@@ -97,6 +101,10 @@ endif
 
 ifeq ($(strip $(USE_SLAVE_FONT)), yes)
     OPT_DEFS += -DUSE_SLAVE_FONT
+endif
+
+ifeq ($(strip $(REVERSED_COL_PINS_KEYMAP)), yes)
+    OPT_DEFS += -DREVERSED_COL_PINS_KEYMAP
 endif
 
 

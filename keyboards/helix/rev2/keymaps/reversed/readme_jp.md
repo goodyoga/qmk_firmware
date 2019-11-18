@@ -117,6 +117,31 @@ master_set_font_no() に 1 を入れることで Slave フォントを使用し�
 
  また、qmk/qmk_firmware オリジナルのコードではローカル変数の struct CharacterMatrix matrix に設定した内容を ssd1306.c::display にコピーするようになっていましたが、 page_mode の設定がうまく伝わらないタイミングがあるのかロゴがちらつきましたので、直接 matrix_getInstance() で ssd1306.c のインスタンスを取得し Update するように変更しました。
 
+
+
+### 左のHelix と 右Helix の入れ替え
+Helix 標準では 中央に OLED Display が来るように左右を配置しますが、両端に OLED Display が来るように配置できるようになります。
+
+#### 設定
+rules.mk にて REVERSED_COL_PINS_KEYMAP を yes に設定してください。
+
+
+```
+REVERSED_COL_PINS_KEYMAP = yes   # Left is right side, Right is left side
+```
+
+
+#### コードの変更
+
+また、この設定のために keymaps/ 以下のファイル以外に下記のファイルを変更していますので、必要に応じてこの fork から取得してください。
+```
+qmk_firmware/keyboards/helix/rev2/local_features.mk
+qmk_firmware/keyboards/helix/rev2/rev2.h
+```
+
+keymap.c には通常と同様に見た目と同じ順序で記述可能です。
+
+
 build
 ```
 $ make helix:reversed
@@ -124,7 +149,7 @@ $ make helix:reversed
 
 flash to keyboard
 ```
-$ make helix:reversed:flash
+$ make helix:reversed:avrdude
 
 ```
 

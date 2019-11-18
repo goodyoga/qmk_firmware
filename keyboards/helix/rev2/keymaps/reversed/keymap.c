@@ -48,6 +48,9 @@ enum macro_keycodes {
 
 //Macros
 #define M_SAMPLE M(KC_SAMPLEMACRO)
+#if !defined( REVERSED_COL_PINS_KEYMAP )
+#pragma error "REVERSED_COL_PINS_KEYMAP should be yes in rules.mk"
+#endif
 
 #if MATRIX_ROWS == 10 // HELIX_ROWS == 5
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -65,23 +68,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * `-------------------------------------------------------------------------------------------------'
    * definition is reversed.
    */
-#if defined( REVERSED_COL_PINS_KEYMAP )
   [_QWERTY] = LAYOUT( \
-               KC_ZKHK, KC_1   , KC_2   , KC_3   , KC_4   , KC_5   ,   KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_BSPC, \
-               KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   ,   KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_MINS, \
-               KC_LCTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G   ,   KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_ENT , \
-      RAISE  , KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   ,   KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT, LOWER, \
-      ADJUST , KC_LCTL, KC_LGUI, KC_LALT, KC_UNDS, LOWER  , KC_SPC ,   KC_SPC , RAISE  , KC_RALT, KC_RGUI, KC_APP , KC_RCTL, RAISE   \
+               KC_ZKHK, KC_1   , KC_2   , KC_3   , KC_4  , KC_5   ,   KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_BSPC, \
+               KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R  , KC_T   ,   KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_MINS, \
+               KC_LCTL, KC_A   , KC_S   , KC_D   , KC_F  , KC_G   ,   KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_ENT , \
+      RAISE  , KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V  , KC_B   ,   KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT, LOWER, \
+      ADJUST , KC_LCTL, KC_LGUI, KC_LALT, KC_UNDS, LOWER , KC_SPC ,   KC_SPC , RAISE  , KC_RALT, KC_RGUI, KC_APP , KC_RCTL, ADJUST   \
       ),
-#else
-  [_QWERTY] = LAYOUT( \
-      KC_5   , KC_4   , KC_3   , KC_2   , KC_1   , KC_ZKHK,                 KC_BSPC, KC_0   , KC_9   , KC_8   , KC_7   , KC_6   , \
-      KC_T   , KC_R   , KC_E   , KC_W   , KC_Q   , KC_TAB ,                 KC_MINS, KC_P   , KC_O   , KC_I   , KC_U   , KC_Y   , \
-      KC_G   , KC_F   , KC_D   , KC_S   , KC_A   , KC_LCTL,                 KC_ENT , KC_SCLN, KC_L   , KC_K   , KC_J   , KC_H   , \
-      KC_B   , KC_V   , KC_C   , KC_X   , KC_Z   , KC_LSFT, RAISE , LOWER , KC_RSFT, KC_SLSH, KC_DOT , KC_COMM, KC_M   , KC_N   , \
-      KC_SPC , LOWER  , KC_ASTR, KC_LALT, KC_LGUI, KC_LCTL, ADJUST, ADJUST, KC_RCTL, KC_APP , KC_RGUI, KC_RALT, RAISE  , KC_SPC   \
-      ),
-#endif
+
   /* Lower
    *        ,-----------------------------------------------------------------------------------.
    *        | `~   |      |      |      |   '  |   /  |   *  |   @  |   -  |   =  |  \|  | DEL  |
@@ -96,7 +90,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * `-------------------------------------------------------------------------------------------------'
    * definition is reversed.
    */
-#if defined( REVERSED_COL_PINS_KEYMAP )
   [_LOWER] = LAYOUT( \
              KC_GRV , KC_NO  , KC_NO  , KC_NO  , KC_QUOT, KC_PSLS,   KC_PAST, KC_AT  , KC_MINS, KC_EQL , KC_BSLS, KC_DEL , \
              _______, KC_EXLM, KC_DQT , KC_HASH, KC_DLR , KC_PERC,   KC_AMPR, KC_LCBR, KC_RCBR, KC_LBRC, KC_RBRC, KC_BSLS, \
@@ -104,15 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, KC_CIRC, KC_TILD, KC_UNDS, KC_PMNS, KC_PPLS,   KC_UNDS, KC_COMM, KC_DOT , KC_SLSH, KC_INT1, _______, _______, \
     _______, _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______, _______  \
     ),
-#else
-  [_LOWER] = LAYOUT( \
-    KC_PSLS, KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_GRV ,                   KC_DEL , KC_BSLS, KC_EQL , KC_MINS, KC_AT  , KC_PAST, \
-    KC_PERC, KC_DLR , KC_HASH, KC_DQT , KC_EXLM, _______,                   KC_BSLS, KC_RBRC, KC_LBRC, KC_RCBR, KC_LCBR, KC_AMPR, \
-    KC_PIPE, KC_BSLS, KC_ASTR, KC_GRV , KC_AT  , _______,                   _______, KC_RPRN, KC_LPRN, KC_DQT , KC_COLN, KC_SCLN, \
-    KC_PPLS, KC_PMNS, KC_UNDS, KC_TILD, KC_CIRC, _______, _______, _______, _______, KC_INT1, KC_SLSH, KC_DOT , KC_COMM, KC_UNDS, \
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  \
-    ),
-#endif
+
   /* Raise
    *        ,-----------------------------------------------------------------------------------.
    *        |  ZH  |      |      |      |      |      | ESC  | Ins  | Home | PgU  | PSc  | BS   |
@@ -127,7 +112,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * `--------------------------------------------------------------------------------------------------' 
    * definition is reversed.
    */
-#if defined( REVERSED_COL_PINS_KEYMAP )
   [_RAISE] = LAYOUT( \
              KC_ZKHK, KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_ESC , KC_INS , KC_HOME, KC_PGUP, KC_PSCR, KC_BSPC, \
              _______, KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  ,   KC_NO  , KC_DEL , KC_END , KC_PGDN, KC_NO  , _______, \
@@ -135,15 +119,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, KC_F11 , KC_F12 , KC_NO  , KC_NO  , KC_NO  ,   KC_NO  , KC_RGHT, KC_DOWN, KC_LEFT, KC_NO  , _______, _______,\
     _______, _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______, _______ \
       ),
-#else
-  [_RAISE] = LAYOUT( \
-    KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_ZKHK,                   KC_BSPC, KC_PSCR, KC_PGUP, KC_HOME, KC_INS , KC_ESC , \
-    KC_F5  , KC_F4  , KC_F3  , KC_F2  , KC_F1  , _______,                   _______, KC_NO  , KC_PGDN, KC_END , KC_DEL , KC_NO  , \
-    KC_F10 , KC_F9  , KC_F8  , KC_F7  , KC_F6  , _______,                   _______, KC_NO  , KC_NO  , KC_UP  , KC_NO  , KC_NO  , \
-    KC_NO  , KC_NO  , KC_NO  , KC_F12 , KC_F11 , _______, _______, _______, _______, KC_NO  , KC_RGHT, KC_DOWN, KC_LEFT, KC_NO  , \
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  \
-      ),
-#endif
 
   /* Adjust (Lower + Raise)
    *        ,-----------------------------------------------------------------------------------.
@@ -158,7 +133,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |      |      |      |      |      |      |      |      |      |      |      |      |      |      |
    * `-------------------------------------------------------------------------------------------------'
    */
-#if defined( REVERSED_COL_PINS_KEYMAP )
   [_ADJUST] =  LAYOUT( \
                _______, KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , _______, \
                _______, RESET  , RGBRST , KC_NO  , KC_NO  , KC_NO  ,   KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , _______, \
@@ -166,15 +140,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, _______, KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_NO  , KC_NO  , RGB_HUD, RGB_VAD, RGB_HUI, _______, _______, \
       _______, _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______, _______  \
       )
-#else
-  [_ADJUST] =  LAYOUT( \
-      KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , _______,                   _______, KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , \
-      KC_NO  , KC_NO  , KC_NO  , RGBRST , RESET  , _______,                   _______, KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , \
-      KC_NO  , AU_OFF , AU_ON  , RGB_MOD, RGB_TOG, _______,                   _______, KC_NO  , RGB_SAI, RGB_VAI, RGB_SAD, KC_NO  , \
-      KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , _______, _______, _______, _______, KC_NO  , RGB_HUI, RGB_VAD, RGB_HUD, KC_NO  , \
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  \
-      )
-#endif
 };
 
 #elif MATRIX_ROWS == 8 // HELIX_ROWS == 4
@@ -182,75 +147,75 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   /* Qwerty
-   * ,-----------------------------------------.             ,-----------------------------------------.
-   * | Tab  |   Q  |   W  |   E  |   R  |   T  |             |   Y  |   U  |   I  |   O  |   P  | Bksp |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * | Ctrl |   A  |   S  |   D  |   F  |   G  |             |   H  |   J  |   K  |   L  |   ;  |  '   |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * | Shift|   Z  |   X  |   C  |   V  |   B  |             |   N  |   M  |   ,  |   .  |   /  |Enter |
+   *        ,-----------------------------------------------------------------------------------.
+   *        | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+   *        |------+------+------+------+------+------|------+------+------+------+------+------|
+   *        | Ctrl |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  '   |
+   *        |------+------+------+------+------+------|------+------+------+------+------+------|
+   *        | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
    * |------+------+------+------+------+------+-------------+------+------+------+------+------+------|
    * |Adjust| Esc  | Alt  | GUI  | EISU |Lower |Space |Space |Raise | KANA | Left | Down |  Up  |Right |
    * `-------------------------------------------------------------------------------------------------'
    */
   [_QWERTY] = LAYOUT( \
-      KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC, \
-      KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
-      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                      KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT , \
-      ADJUST,  KC_ESC,  KC_LALT, KC_LGUI, EISU,    LOWER,   KC_SPC,  KC_SPC,  RAISE,   KANA,    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
+              KC_TAB,  KC_Q,    KC_W,    KC_E, KC_R,  KC_T,     KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,    KC_BSPC, \
+              KC_LCTL, KC_A,    KC_S,    KC_D, KC_F,  KC_G,     KC_H,   KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
+              KC_LSFT, KC_Z,    KC_X,    KC_C, KC_V,  KC_B,     KC_N,   KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_ENT , \
+      ADJUST, KC_ESC,  KC_LALT, KC_LGUI, EISU, LOWER, KC_SPC,   KC_SPC, RAISE,  KANA,    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
       ),
 
   /* Lower
-   * ,-----------------------------------------.             ,-----------------------------------------.
-   * |   ~  |   !  |   @  |   #  |   $  |   %  |             |   ^  |   &  |   *  |   (  |   )  |      |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * |      |  F1  |  F2  |  F3  |  F4  |  F5  |             |  F6  |   _  |   +  |   {  |   }  |  |   |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * |      |  F7  |  F8  |  F9  |  F10 |  F11 |             |  F12 |      |      | Home | End  |      |
+   *        ,-----------------------------------------------------------------------------------.
+   *        |   ~  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  |      |
+   *        |------+------+------+------+------+------|------+------+------+------+------+------|
+   *        |      |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   _  |   +  |   {  |   }  |  |   |
+   *        |------+------+------+------+------+------|------+------+------+------+------+------|
+   *        |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |      |      | Home | End  |      |
    * |------+------+------+------+------+------+-------------+------+------+------+------+------+------|
    * |      |      |      |      |      |      |      |      |      |      | Next | Vol- | Vol+ | Play |
    * `-------------------------------------------------------------------------------------------------'
    */
   [_LOWER] = LAYOUT( \
-      KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______, \
-      _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                     KC_F6,   KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE, \
-      _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,                    KC_F12,  _______, _______, KC_HOME, KC_END,  _______, \
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY \
+               KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______, \
+               _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5  ,   KC_F6,   KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE, \
+               _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11 ,   KC_F12,  _______, _______, KC_HOME, KC_END,  _______, \
+      _______, _______, _______, _______, _______, _______, _______,   _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY \
       ),
 
   /* Raise
-   * ,-----------------------------------------.             ,-----------------------------------------.
-   * |   `  |   1  |   2  |   3  |   4  |   5  |             |   6  |   7  |   8  |   9  |   0  | Del  |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * |      |  F1  |  F2  |  F3  |  F4  |  F5  |             |  F6  |   -  |   =  |   [  |   ]  |  \   |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * |      |  F7  |  F8  |  F9  |  F10 |  F11 |             |  F12 |      |      |PageDn|PageUp|      |
+   *        ,-----------------------------------------------------------------------------------.
+   *        |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Del  |
+   *        |------+------+------+------+------+------|------+------+------+------+------+------|
+   *        |      |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   -  |   =  |   [  |   ]  |  \   |
+   *        |------+------+------+------+------+------|------+------+------+------+------+------|
+   *        |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |      |      |PageDn|PageUp|      |
    * |------+------+------+------+------+------+-------------+------+------+------+------+------+------|
    * |      |      |      |      |      |      |      |      |      |      | Next | Vol- | Vol+ | Play |
    * `-------------------------------------------------------------------------------------------------'
    */
   [_RAISE] = LAYOUT( \
-      KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL, \
-      _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                     KC_F6,   KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS, \
-      _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,                    KC_F12,  _______, _______, KC_PGDN, KC_PGUP, _______, \
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY \
+               KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5   ,   KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL, \
+               _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5  ,   KC_F6,   KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS, \
+               _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11 ,   KC_F12,  _______, _______, KC_PGDN, KC_PGUP, _______, \
+      _______, _______, _______, _______, _______, _______, _______,   _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY \
       ),
 
   /* Adjust (Lower + Raise)
-   * ,-----------------------------------------.             ,-----------------------------------------.
-   * |      | Reset|      |      |      |      |             |      |      |      |      |      |  Del |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * |      |      |      |Aud on|Audoff| Mac  |             | Win  |Qwerty|Colemk|Dvorak|      |      |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * |      |      |      |      |      |      |             |      |      |RGB ON| HUE+ | SAT+ | VAL+ |
+   *        ,-----------------------------------------------------------------------------------.
+   *        |      | Reset|      |      |      |      |      |      |      |      |      |  Del |
+   *        |------+------+------+------+------+------|------+------+------+------+------+------|
+   *        |      |      |      |Aud on|Audoff| Mac  | Win  |Qwerty|Colemk|Dvorak|      |      |
+   *        |------+------+------+------+------+------|------+------+------+------+------+------|
+   *        |      |      |      |      |      |      |      |      |RGB ON| HUE+ | SAT+ | VAL+ |
    * |------+------+------+------+------+------+-------------+------+------+------+------+------+------|
    * |      |      |      |      |      |      |      |      |      |      | MODE | HUE- | SAT- | VAL- |
    * `-------------------------------------------------------------------------------------------------'
    */
   [_ADJUST] =  LAYOUT( \
-      _______, RESET,   _______, _______, _______, _______,                   _______, _______, _______, _______, _______, KC_DEL, \
-      _______, _______, _______, AU_ON,   AU_OFF,  AG_NORM,                   AG_SWAP, QWERTY,  COLEMAK, DVORAK,  _______, _______, \
-      _______, _______, _______, _______, _______, _______,                   _______, _______, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, \
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD \
+               _______, RESET,   _______, _______, _______, _______,   _______, _______, _______, _______, _______, KC_DEL, \
+               _______, _______, _______, AU_ON,   AU_OFF,  AG_NORM,   AG_SWAP, QWERTY,  COLEMAK, DVORAK,  _______, _______, \
+               _______, _______, _______, _______, _______, _______,   _______, _______, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, \
+      _______, _______, _______, _______, _______, _______, _______,   _______, _______, _______, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD \
       )
 };
 
