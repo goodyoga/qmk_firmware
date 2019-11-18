@@ -87,9 +87,21 @@ USE_SLAVE_FONT    = yes     # use another font for slave.
 LED_BACK_ENABLE   = yes     # LED backlight (Enable WS2812 RGB underlight.)
 # LED_UNDERGLOW_ENABLE = no   # LED underglow (Enable WS2812 RGB underlight.)
 LED_ANIMATIONS    = yes     # LED animations
-IOS_DEVICE_ENABLE = no      # connect to IOS device (iPad,iPhone)```
-## Compile
+IOS_DEVICE_ENABLE = no      # connect to IOS device (iPad,iPhone)
+REVERSED_COL_PINS_KEYMAP = yes   # Left is right side, Right is left side
 ```
+
+### USE_SLAVE_FONT
+
+See readme_jp.md for more details.
+
+### REVERSED_COL_PINS_KEYMAP
+
+See readme_jp.md for more details.
+
+
+
+## Compile
 
 go to qmk top directory.
 ```
@@ -103,7 +115,7 @@ $ make helix:reversed
 
 flash to keyboard
 ```
-$ make helix:reversed:flash
+$ make helix:reversed:avrdude
 
 ```
 
