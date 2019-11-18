@@ -116,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
              KC_ZKHK, KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_ESC , KC_INS , KC_HOME, KC_PGUP, KC_PSCR, KC_BSPC, \
              _______, KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  ,   KC_NO  , KC_DEL , KC_END , KC_PGDN, KC_NO  , _______, \
              _______, KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 ,   KC_NO  , KC_NO  , KC_UP  , KC_NO  , KC_NO  , _______, \
-    _______, _______, KC_F11 , KC_F12 , KC_NO  , KC_NO  , KC_NO  ,   KC_NO  , KC_RGHT, KC_DOWN, KC_LEFT, KC_NO  , _______, _______,\
+    _______, _______, KC_F11 , KC_F12 , KC_NO  , KC_NO  , KC_NO  ,   KC_NO  , KC_LEFT, KC_DOWN, KC_RGHT, KC_NO  , _______, _______,\
     _______, _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______, _______ \
       ),
 
@@ -136,8 +136,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_ADJUST] =  LAYOUT( \
                _______, KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , _______, \
                _______, RESET  , RGBRST , KC_NO  , KC_NO  , KC_NO  ,   KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , _______, \
-               _______, RGB_TOG, RGB_MOD, AU_ON  , AU_OFF , KC_NO  ,   KC_NO  , KC_NO  , RGB_SAD, RGB_VAI, RGB_SAI, _______, \
-      _______, _______, KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_NO  , KC_NO  , RGB_HUD, RGB_VAD, RGB_HUI, _______, _______, \
+               _______, RGB_TOG, RGB_MOD, AU_ON  , AU_OFF , KC_NO  ,   KC_NO  , RGB_SAD, RGB_VAI, RGB_SAI, KC_NO  , _______, \
+      _______, _______, KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_NO  , RGB_HUD, RGB_VAD, RGB_HUI, KC_NO  , _______, _______, \
       _______, _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______, _______  \
       )
 };
