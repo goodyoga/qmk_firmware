@@ -179,11 +179,11 @@ ssd1306 ドライバのデフォルト動作として画面いっぱいに4行�
 ##### master_set_font_no()
 master_set_font_no() に 1 を入れることで Slave フォントを使用します。 0 だと Master フォントを使用します。
 
-また、qmk/qmk_firmware オリジナルのコードではローカル変数の struct CharacterMatrix matrix に設定した内容を比較して ssd1306.c::display にコピーするようになっていましたが、 page_mode の設定がうまく伝わらないタイミングがあるのかロゴがちらつきましたので、直接 matrix_getInstance() で ssd1306.c のインスタンスを取得し Update するように変更しました。
+また、qmk/qmk_firmware オリジナルのコードではローカル変数の struct CharacterMatrix matrix に仮設定した内容とオリジナルを比較して ssd1306.c::display にコピーするようになっていましたが、 page_mode の設定がうまく伝わらなくてロゴがちらつきますので、直接 matrix_getInstance() で ssd1306.c のインスタンスを取得し Update するように変更しました。
 
-タイムアウトで描画を消す対応と毎回描画するとキーを取りこぼす頻度が高い対策は別途入れてあります。 matrix_clear(); を render_status() と render_logo() に移動し、render_*() での描画は変更があったときのみになるように state 変数を導入しています。
+インスタンスの直接編集の弊害で起こるタイムアウトで描画を消す対応と毎回描画するとキーを取りこぼす頻度が高い対策は別途入れてあります。 matrix_clear(); を render_status() と render_logo() に移動し、render_*() での描画は変更があったときのみになるように state 変数を導入しています。
 
-将来的には ssd1306.c 側をダブルバッファにして、keymap.c 側では更新の有無を意識しなくて済む構成にしたいです。
+将来的には ssd1306.c 側をダブルバッファにして(ssd1306側で比較することで)、keymap.c 側では更新の有無を意識しなくて済む構成にしたいです。
 
 
 

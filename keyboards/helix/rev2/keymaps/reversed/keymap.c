@@ -71,17 +71,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                KC_1   , KC_2   , KC_3   , KC_4   , KC_5   , KC_6   ,   KC_7   , KC_8   , KC_9   , KC_0   , KC_MINS, KC_BSPC, \
                KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   ,   KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_LBRC, \
                KC_LCTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G   ,   KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_ENT , \
-      RAISE  , KC_LSFT, KC_SLSH, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   ,   KC_N   , KC_M   , KC_COMM, KC_DOT , KC_RSFT, LOWER, \
+      RAISE  , KC_LSFT, KC_SLSH, KC_Z   , KC_X   , KC_C   , KC_V   ,   KC_B   , KC_N   , KC_M   , KC_COMM, KC_DOT , KC_RSFT, LOWER, \
       ADJUST , KC_LCTL, KC_LGUI, KC_LALT, KC_UNDS, LOWER  , KC_SPC ,   KC_SPC , RAISE  , KC_RALT, KC_RGUI, KC_APP , KC_RCTL, ADJUST   \
       ),
 
   /* Lower
    *        ,-----------------------------------------------------------------------------------.
-   *        | `~   |      |      |      |   '  |   /  |   *  |  (@) |   -  |   =  |  \|  | DEL  |
+   *        | `~   |      |      |   '  |   "  |   /  |  (@) |   *  |   -  |   =  |  \|  | DEL  |
    *        |------+------+------+------+------+------+------+------+------+------+------+------|
-   *        | TAB  |  (!) |  (") |  (#) |  ($) |  (%) |  (&) |   {  |   }  |   [  |   ]  | \|   |
+   *        |  (!) |  (") |  (#) |  ($) |  (%) |  (^) |  (&) |   {  |   }  |   [  |   ]  | \|   |
    *        |------+------+------+------+------+------|------+------+------+------+------+------|
-   *        |      |  (@) |  `   |  (*) |   \  |  (|) |   ;  |  (:) |   "  |  (() |  ()) | ENT  |
+   *        |      |  (@) |  `   |  (*) |   \  |  (|) |  (|) |   ;  |  (:) |  (() |  ()) | ENT  |
    * |------|------+------+------+------+------+------+------+------+------+------+------+------+------|
    * |      |      |  (^) |  (~) |  (_) |  -   |  +   |  (_) |  ,<  |  .>  |  /?  | (¥_) | SH   |      |
    * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
@@ -90,9 +90,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * (char) has language dependency.
    */
   [_LOWER] = LAYOUT( \
-             KC_GRV , KC_NO  , KC_NO  , KC_NO  , KC_QUOT, KC_PSLS,   KC_PAST, KC_AT  , KC_MINS, KC_EQL , KC_INT3, KC_DEL , \
-             _______, KC_EXLM, KC_DQT , KC_HASH, KC_DLR , KC_PERC,   KC_AMPR, KC_LCBR, KC_RCBR, KC_LBRC, KC_RBRC, KC_BSLS, \
-             _______, KC_AT  , KC_GRV , KC_ASTR, KC_BSLS, KC_PIPE,   KC_SCLN, KC_COLN, KC_DQT , KC_LPRN, KC_RPRN, _______, \
+             KC_GRV , KC_NO  , KC_NO  , KC_QUOT, KC_DQT , KC_PSLS,   KC_AT  , KC_ASTR, KC_MINS, KC_EQL , KC_INT3, KC_DEL , \
+             KC_EXLM, KC_DQT , KC_HASH, KC_DLR , KC_PERC, KC_CIRC,   KC_AMPR, KC_LCBR, KC_RCBR, KC_LBRC, KC_RBRC, KC_BSLS, \
+             _______, KC_AT  , KC_GRV , KC_ASTR, KC_BSLS, KC_PIPE,   KC_PIPE, KC_SCLN, KC_COLN, KC_LPRN, KC_RPRN, _______, \
     _______, _______, KC_CIRC, KC_TILD, KC_UNDS, KC_PMNS, KC_PPLS,   KC_UNDS, KC_COMM, KC_DOT , KC_SLSH, KC_INT1, _______, _______, \
     _______, _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______, _______  \
     ),
@@ -103,7 +103,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *        |------+------+------+------+------+------|------+------+------+------+------+------|
    *        |      |  F1  |  F2  |  F3  |  45  |  F5  |      | DEL  | End  | PgD  |      |      |
    *        |------+------+------+------+------+------|------+------+------+------+------+------|
-   *        |      |  F6  |  F7  |  F8  |  F9  |  F10 |      | PgD  | UP   | PgU  |      | ENT  |     
+   *        |      |  F6  |  F7  |  F8  |  F9  |  F10 |      | PgU  | UP   | PgD  |      | ENT  |     
    * |------|------+------+------+------+------+------+------+------+------+------+------+------|------|
    * |      |      |  F11 |  F12 |      |      |      |      | LEFT | DOWN | RIGHT|      | SH   |      |
    * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
@@ -114,7 +114,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_RAISE] = LAYOUT( \
              KC_GRV , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_ESC , KC_INS , KC_HOME, KC_PGUP, KC_PSCR, KC_DEL , \
              _______, KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  ,   KC_NO  , KC_DEL , KC_END , KC_PGDN, KC_NO  , _______, \
-             _______, KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 ,   KC_NO  , KC_PGDN, KC_UP  , KC_PGUP, KC_NO  , _______, \
+             _______, KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 ,   KC_NO  , KC_PGUP, KC_UP  , KC_PGDN, KC_NO  , _______, \
     _______, _______, KC_F11 , KC_F12 , KC_NO  , KC_NO  , KC_NO  ,   KC_NO  , KC_LEFT, KC_DOWN, KC_RGHT, KC_NO  , _______, _______,\
     _______, _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______, _______ \
       ),
@@ -411,12 +411,12 @@ static void render_logo(struct CharacterMatrix *matrix)
 
 
 //assign the right code to your layers for OLED display
-#define L_BASE 0
-#define L_LOWER (1<<_LOWER)
-#define L_RAISE (1<<_RAISE)
-#define L_ADJUST (1<<_ADJUST)
+#define L_BASE       0
+#define L_LOWER      (1<<_LOWER)
+#define L_RAISE      (1<<_RAISE)
+#define L_ADJUST     (1<<_ADJUST)
 #define L_ADJUST_TRI (L_ADJUST|L_RAISE|L_LOWER)
-#define L_UNDEF  (-1)
+#define L_UNDEF      (-1)
 
 
 static long int  old_layer_state = L_UNDEF;
