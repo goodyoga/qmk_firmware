@@ -5,20 +5,25 @@
 #include "i2c.h"
 #include <string.h>
 #include "print.h"
+
 #ifndef LOCAL_GLCDFONT
 #include "common/glcdfont.c"
 #else
 #include <helixfont.h>
+#endif
+
 #if defined(USE_SLAVE_FONT)
 #include <helixfont_slave.h>
 #endif
-#endif
+
 #ifdef ADAFRUIT_BLE_ENABLE
 #include "adafruit_ble.h"
 #endif
+
 #ifdef PROTOCOL_LUFA
 #include "lufa.h"
 #endif
+
 #include "sendchar.h"
 #include "timer.h"
 
