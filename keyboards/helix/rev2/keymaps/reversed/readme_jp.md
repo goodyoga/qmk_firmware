@@ -235,13 +235,13 @@ qmk_firmware/quantum/rgblight.c
 なお、変更したのは rgblight_effect_rgbtest() です。
 
 #### その他
-make  helix:led_test でビルドすると使えます。
+変更した RGBTEST は make  helix:led_test でビルドすると使えます。
 
 
 
 
 
-build
+### build
 ```
 $ make helix:reversed
 ```
