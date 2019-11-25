@@ -95,10 +95,6 @@ ifeq ($(strip $(LOCAL_GLCDFONT)), yes)
     OPT_DEFS += -DLOCAL_GLCDFONT
 endif
 
-ifeq ($(strip $(FONT_SIZE_LARGE)), yes)
-    OPT_DEFS += -DFONT_SIZE_LARGE
-endif
-
 ifeq ($(strip $(USE_SLAVE_FONT)), yes)
     OPT_DEFS += -DUSE_SLAVE_FONT
 endif
