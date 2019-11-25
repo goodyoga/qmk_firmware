@@ -93,9 +93,6 @@ void matrix_write_char_inner(struct CharacterMatrix *matrix, uint8_t c);
 void matrix_write_char(struct CharacterMatrix *matrix, uint8_t c);
 void matrix_write(struct CharacterMatrix *matrix, const char *data);
 void matrix_write_P(struct CharacterMatrix *matrix, const char *data);
-void matrix_write_char_inner_nolf(struct CharacterMatrix *matrix, uint8_t c);
-void matrix_write_char_nolf(struct CharacterMatrix *matrix, uint8_t c);
-void matrix_write_nolf(struct CharacterMatrix *matrix, const char *data);
 void matrix_render(struct CharacterMatrix *matrix);
 void matrix_set_page_mode(bool enable);
 #if defined(USE_SLAVE_FONT)
