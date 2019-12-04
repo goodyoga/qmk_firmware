@@ -69,10 +69,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
   [_QWERTY] = LAYOUT( \
                KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_ESC , KC_PSCR, KC_INS , KC_HOME, KC_PGUP, KC_DEL , \
-               KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_NO  , KC_S   , KC_DEL , KC_END , KC_PGDN, KC_BSPC, \
-               KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_X   , KC_C   , KC_V   , KC_UP  , KC_NO  , KC_ENT , \
-      KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_Z   , KC_Y   , KC_LEFT, KC_DOWN, KC_RGHT, KC_RSFT, LOWER, \
-      KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_LCTL, KC_LSFT, KC_LGUI, KC_LALT, KC_NO  , KC_RCTL, ADJUST   \
+               KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_Y   , KC_S   , KC_DEL , KC_END , KC_PGDN, KC_BSPC, \
+               KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_X   , KC_C   , KC_V   , KC_NO  , KC_NO  , KC_ENT , \
+      KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_Z   , KC_LALT, KC_PGDN, KC_UP  , KC_PGUP, KC_RSFT, LOWER, \
+      KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_LCTL, KC_LSFT, KC_LEFT, KC_DOWN, KC_RGHT, KC_RCTL, ADJUST   \
       ),
 
   /* Lower
