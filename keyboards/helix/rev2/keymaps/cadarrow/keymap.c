@@ -56,22 +56,22 @@ enum macro_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Qwerty
    *        ,-----------------------------------------------------------------------------------.
-   *        |      |      |      |      |      |      |  ESC | PSc  | Ins  | Home | PgUP | DEL  |
+   *        |      |      |      |      |      |      |  DEL | ESC  |  F4  |      | Home | DEL  |
    *        |------+------+------+------+------+------+------+------+------+------+------+------|
-   *        |      |      |      |      |      |      |      |   S  | DEL  | End  | PgDN | BS   |
+   *        |      |      |      |      |      |      |  ALT |  S   |  R   |  Y   | End  | BS   |
    *        |------+------+------+------+------+------+------+------+------+------+------+------|
-   *        |      |      |      |      |      |      |   X  |   C  |   V  |  UP  |      | ENT  |
+   *        |      |      |      |      |      |      |  Z   |  X   |  C   |  V   | PgUP | ENT  |
    * |------|------+------+------+------+------+------+------+------+------+------+------+------+------|
-   * |      |      |      |      |      |      |      |   Z  |   Y  | Left | DOWN | Right| SH   | LOWER|
+   * |      |      |      |      |      |      |      | Gui  |Shift |      |  UP  | PgDN | SH   | LOWER|
    * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
-   * |      |      |      |      |      |      |      | Ctl  | Shift| GUI  | ALT  |      | RCTL | ADJ  |
+   * |      |      |      |      |      |      |      | Ctl  |Shift | Left | Down | Right| RCTL | ADJ  |
    * `-------------------------------------------------------------------------------------------------'
    */
   [_QWERTY] = LAYOUT( \
-               KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_ESC , KC_PSCR, KC_INS , KC_HOME, KC_PGUP, KC_DEL , \
-               KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_Y   , KC_S   , KC_DEL , KC_END , KC_PGDN, KC_BSPC, \
-               KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_X   , KC_C   , KC_V   , KC_NO  , KC_NO  , KC_ENT , \
-      KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_Z   , KC_LALT, KC_PGDN, KC_UP  , KC_PGUP, KC_RSFT, LOWER, \
+               KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_DEL , KC_ESC , KC_F4  , KC_NO  , KC_HOME, KC_DEL , \
+               KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_LALT, KC_NO  , KC_S   , KC_Y   , KC_END , KC_BSPC, \
+               KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_Z   , KC_X   , KC_C   , KC_V   , KC_PGUP, KC_ENT , \
+      KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_LGUI, KC_LSFT, KC_NO  , KC_UP  , KC_PGDN, KC_RSFT, LOWER, \
       KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_LCTL, KC_LSFT, KC_LEFT, KC_DOWN, KC_RGHT, KC_RCTL, ADJUST   \
       ),
 
