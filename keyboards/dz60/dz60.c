@@ -19,6 +19,10 @@ void led_init_ports(void) {
   DDRB |= (1 << 2);
   // Default to off
   PORTB |= (1 << 2);
+
+  // key LEDs to on
+  DDRB |= (1 << 6);
+  PORTB |= (1 << 6);
 }
 
 void led_set_kb(uint8_t usb_led) {
